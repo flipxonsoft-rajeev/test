@@ -1,0 +1,7 @@
+flipxon-cabs
+coolection-----rider
+document fields-----
+city:
+email:
+mobile_number:
+user_name:

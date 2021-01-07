@@ -1,0 +1,178 @@
+github details:
+user:flipxonsoft-rajeev
+pass:raj123@Flipxonsoft
+
+        progressDialog = new ProgressDialog(context);
+        collectionReferenceDriver = FirebaseFirestore.getInstance().collection("orders");
+        //collectionReferenceDriver.whereEqualTo("active", true).whereEqualTo("document_verified", true).get()
+        collectionReferenceDriver.orderBy("created_at", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    progressDialog = new ProgressDialog(context);
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("TAG", document.getId() + " => " + document.getData());
+
+                        //Toast.makeText(MainActivity.this, "Records : " + document.getId().length(), Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.cancel();
+
+                } else {
+                    progressDialog.cancel();
+                    Toast.makeText(MainActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+        /*progressDialog = new ProgressDialog(context);
+        collectionReferenceDriver = FirebaseFirestore.getInstance().collection("orders");
+        //collectionReferenceDriver.whereEqualTo("active", true).whereEqualTo("document_verified", true).get()
+        collectionReferenceDriver.whereEqualTo("status", "COMPLETED").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    progressDialog = new ProgressDialog(context);
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("TAG", document.getId() + " => " + document.getData());
+
+                        //Toast.makeText(MainActivity.this, "Records : " + document.getId().length(), Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.cancel();
+
+                } else {
+                    progressDialog.cancel();
+                    Toast.makeText(MainActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
+
+
+------------------------------------------
+D/TAG: 1RFsLWh1G13o2JAnUGla => {amount=101.0, trip_id=48290c14-1ded-417a-b1d9-f65a8be7ee55, payment_status=Paid, dropoff={address=Bus Station Pilibhit Bypass Rd, Bareilly, latitude=28.3512145, longitude=79.43928249999999}, created_at=2020-10-17T12:26:35Z, pickup={address=Rajendra Nagar Bareilly, Uttar Pradesh, latitude=28.3905364, longitude=79.429241}, otp=3245, rider={role=rider, device_id=null, car=null, name=ridernight, phone_number=8130583124, id=NIt7xyvSFjP4kgOq4uePW6ANO0Z2}, car_type=SUV, driver={role=driver, device_id=23A50640-7469-396E-88BE-B7EADE38AAE1, car={license_plate=license01, model=gtx180}, lastKnownLocation=null, name=Shivam Bhas, phone_number=9639241605, id=8B8kBqcqEDS25R65J8xTncBFcA32, document_verified=null}, updated_at=2020-10-17T12:27:00Z, razorpay_order_id=order_Fpy4YW2Lhd19An, id=1RFsLWh1G13o2JAnUGla, status=COMPLETED}
+D/TAG: 9FdMak2h5rQCEl4DjFv2 => {amount=70.0, trip_id=57b1a8b0-c845-4911-9e82-31304665de0b, payment_status=null, dropoff={address=16/1 U Block, Sector 24, latitude=28.4906149, longitude=77.093312}, created_at=2020-11-03T08:21:52Z, pickup={address=Sahara Mall MG Road, DLF Phase 1, latitude=28.4795587, longitude=77.08675450000001}, otp=4663, rider={role=rider, device_id=null, car=null, name=, phone_number=8437379790, id=OESctiEcxlO1ZROX4UXDtx6D8JI2}, car_type=Hatchback, driver={role=driver, device_id=84E43E12-CBAD-33DC-AA89-5637D06B1568, car={license_plate=license01, model=gtx180}, lastKnownLocation=null, name=Driver1145 6041, phone_number=9817998779, id=UDMsB5oMwtTGv6gnLGmXbLL8KAq1, document_verified=null}, updated_at=2020-11-03T08:23:10Z, razorpay_order_id=order_Fwcz7hMBHGl97I, id=9FdMak2h5rQCEl4DjFv2, status=COMPLETED}
+D/TAG: HOj9Z6QZc6JxafO0cmpn => {amount=60.0, trip_id=9f2bb77f-74e8-4754-b314-2d1ee8bd1aa9, payment_status=Paid, dropoff={address=Bus Station Pilibhit Bypass Rd, Bareilly, latitude=28.3512145, longitude=79.43928249999999}, created_at=2020-10-15T07:48:39Z, pickup={address=Rajendra Nagar Bareilly, Uttar Pradesh, latitude=28.39054, longitude=79.42924}, otp=1497, rider={role=rider, device_id=null, car=null, name=ridernight, phone_number=8130583124, id=NIt7xyvSFjP4kgOq4uePW6ANO0Z2}, car_type=SUV, driver={role=driver, device_id=23A50640-7469-396E-88BE-B7EADE38AAE1, car={license_plate=license01, model=gtx180}, name=Shivam Bhas, phone_number=9639241605, id=8B8kBqcqEDS25R65J8xTncBFcA32, document_verified=null}, updated_at=2020-10-15T07:49:17Z, razorpay_order_id=order_Fp6GmQFTbJ8Kwv, id=HOj9Z6QZc6JxafO0cmpn, status=COMPLETED}
+D/TAG: MVZAXv4oGipDggEYAFqq => {amount=330.0, trip_id=760aed66-cf81-43ab-9a78-fc97eff5888e, payment_status=null, dropoff={address=Delhi, India, latitude=28.6862738, longitude=77.2217831}, created_at=2020-11-03T08:35:39Z, pickup={address=Sahara Mall MG Road, DLF Phase 1, latitude=28.4795587, longitude=77.08675450000001}, otp=4677, rider={role=rider, device_id=null, car=null, name=, phone_number=8437379790, id=OESctiEcxlO1ZROX4UXDtx6D8JI2}, car_type=Hatchback, driver={role=driver, device_id=84E43E12-CBAD-33DC-AA89-5637D06B1568, car={license_plate=license01, model=gtx180}, lastKnownLocation=null, name=Driver1145 6041, phone_number=9817998779, id=UDMsB5oMwtTGv6gnLGmXbLL8KAq1, document_verified=null}, updated_at=2020-11-03T08:37:43Z, razorpay_order_id=order_FwdDgrWqbNzPsN, id=MVZAXv4oGipDggEYAFqq, status=COMPLETED}
+D/TAG: Sgv4cS1kCXaxoZ9Opjyc => {amount=135.0, trip_id=a565390b-2c7d-4e84-9872-4629f40a4290, payment_status=null, dropoff={address=National Highway - 8 Ambience Island, Sector 24, latitude=28.503641, longitude=77.09734069999999}, created_at=2020-11-02T14:02:46Z, pickup={address=16/1 U Block, Sector 24, latitude=28.4906149, longitude=77.093312}, otp=4663, rider={role=rider, device_id=null, car=null, name=, phone_number=8437379790, id=OESctiEcxlO1ZROX4UXDtx6D8JI2}, car_type=SUV, driver={role=driver, device_id=84E43E12-CBAD-33DC-AA89-5637D06B1568, car={license_plate=license01, model=gtx180}, lastKnownLocation=null, name=Driver1145 6041, phone_number=9817998779, id=UDMsB5oMwtTGv6gnLGmXbLL8KAq1, document_verified=null}, updated_at=2020-11-02T14:29:44Z, razorpay_order_id=order_FwKG9RtWTq2A8V, id=Sgv4cS1kCXaxoZ9Opjyc, status=COMPLETED}
+D/TAG: TO0wXsVYfR4R4SI9PuBj => {amount=40.0, trip_id=82bca15e-f92a-42e3-808c-1f785859bb07, payment_status=Paid, dropoff={address=IVRI Road Delapeer, Bareilly, latitude=28.388421, longitude=79.4354776}, created_at=2020-10-17T12:30:07Z, pickup={address=Rajendra Nagar Bareilly, Uttar Pradesh, latitude=28.39055687, longitude=79.42914511}, otp=2650, rider={role=rider, device_id=null, car=null, name=ridernight, phone_number=8130583124, id=NIt7xyvSFjP4kgOq4uePW6ANO0Z2}, car_type=Hatchback, driver={role=driver, device_id=23A50640-7469-396E-88BE-B7EADE38AAE1, car={license_plate=license01, model=gtx180}, lastKnownLocation=null, name=Shivam Bhas, phone_number=9639241605, id=8B8kBqcqEDS25R65J8xTncBFcA32, document_verified=null}, updated_at=2020-10-17T12:30:41Z, razorpay_order_id=order_Fpy8I4sLk357dP, id=TO0wXsVYfR4R4SI9PuBj, status=COMPLETED}
+D/TAG: VBJwR6VXBpB7ky8p7DNI => {amount=0.0, trip_id=638f10cb-65d3-42a9-885f-0aa942fde8d5, payment_status=null, dropoff={address=Sector 25 Chandigarh, CH, latitude=30.7512305, longitude=76.7583714}, created_at=2020-12-12T05:56:00Z, pickup={address=Sector 17 Chandigarh, Chandigarh, latitude=30.738423333333337, longitude=76.78106}, otp=5557, paytm_checksum=null, ride_insure=null, rider={role=rider, device_id=null, car=null, name=C.P, phone_number=9779291062, id=dCTjlXpcEYTt3UFWhb6BzlJgTii2}, car_type=Hatchback, driver={role=driver, device_id=EF861F41-642A-4081-B1D9-0265ED05B40D, car={license_plate=license01, model=gtx180}, lastKnownLocation=null, name=Driver4951, phone_number=8360951916, id=O3FcYiEeBZPPry34qN4lWlpT3yl2, document_verified=null}, updated_at=2020-12-12T05:57:52Z, razorpay_order_id=null, id=VBJwR6VXBpB7ky8p7DNI, status=COMPLETED}
+D/TAG: Zzza6nVJRfIRxJprpGEK => {amount=50.0, trip_id=e1cd211e-9c63-420f-bf60-c4b4b8e6a528, payment_status=Paid, dropoff={address=Bus Station Pilibhit Bypass Rd, Bareilly, latitude=28.3512145, longitude=79.43928249999999}, created_at=2020-10-15T09:11:54Z, pickup={address=Rajendra Nagar Bareilly, Uttar Pradesh, latitude=28.3905379, longitude=79.429241}, otp=2726, rider={role=rider, device_id=null, car=null, name=ridernight, phone_number=8130583124, id=NIt7xyvSFjP4kgOq4uePW6ANO0Z2}, car_type=Sedan, driver={role=driver, device_id=23A50640-7469-396E-88BE-B7EADE38AAE1, car={license_plate=license01, model=gtx180}, name=Shivam Bhas, phone_number=9639241605, id=8B8kBqcqEDS25R65J8xTncBFcA32, document_verified=null}, updated_at=2020-10-15T09:12:46Z, razorpay_order_id=order_Fp7ghLzEQTUc2Y, id=Zzza6nVJRfIRxJprpGEK, status=COMPLETED}
+D/TAG: mjccD25Vb0xH9UsVbRNz => {amount=50.0, trip_id=097aef12-fb83-4221-a66c-a581265f2876, payment_status=Paid, dropoff={address=Bus Station Pilibhit Bypass Rd, Bareilly, latitude=28.3512145, longitude=79.43928249999999}, created_at=2020-10-15T05:52:31Z, pickup={address=Rajendra Nagar Bareilly, Uttar Pradesh, latitude=28.39044532, longitude=79.42920596}, otp=2726, rider={role=rider, device_id=null, car=null, name=ridernight, phone_number=8130583124, id=NIt7xyvSFjP4kgOq4uePW6ANO0Z2}, car_type=Sedan, driver={role=driver, device_id=B1436C62-4E8A-3CED-AAC2-37DD306CD1BC, car={license_plate=license01, model=gtx180}, name=Patwal Travels 1215, phone_number=9999585973, id=pCLqub5c1dhqsYAUymKiEVXmPAD2, document_verified=null}, updated_at=2020-10-15T05:53:02Z, razorpay_order_id=order_Fp4I2lGGFuqcsm, id=mjccD25Vb0xH9UsVbRNz, status=COMPLETED}
+D/TAG: p72HQoRrVm9aCJMOC6Ir => {amount=110.0, trip_id=83de7106-68dd-4ee4-81ee-e86f4f0fef0c, payment_status=null, dropoff={address=Ameerpet Hyderabad, Telangana, latitude=17.4375084, longitude=78.4482441}, created_at=2020-11-19T07:57:19Z, pickup={address=Gunrock Enclave Secunderabad, Telangana, latitude=17.447965, longitude=78.494551}, otp=2967, paytm_checksum=null, rider={role=rider, device_id=null, car=null, name=, phone_number=6303951521, id=RIGPvneSSVYeuHiJabee1ej6OXE2}, car_type=Sedan, driver={role=driver, device_id=8FF9BC4F-4847-3DD3-B959-AFFC92F01A75, car={license_plate=license01, model=gtx180}, lastKnownLocation=null, name=R Hanumanth Naik 5356, phone_number=6300435770, id=eiHGflx5zcXBwZOGJ8ZIYfPpEDY2, document_verified=null}, updated_at=2020-11-19T07:59:55Z, razorpay_order_id=order_G2x7AWGGrPYOoP, id=p72HQoRrVm9aCJMOC6Ir, status=COMPLETED}
+D/TAG: pjzw3UbYECxOZ3oOwFuL => {amount=1958.0, trip_id=777ee761-3d72-41a5-8661-39c3d1fe2c82, payment_status=null, dropoff={address=Farrukhabad Farrukhabad, IN, latitude=27.3825853, longitude=79.5840195}, created_at=2020-10-15T14:56:13Z, pickup={address=Indirapuram Ghaziabad, Uttar Pradesh, latitude=28.6349878, longitude=77.3530802}, otp=3713, rider={role=rider, device_id=null, car=null, name=, phone_number=7838407544, id=aKsJtqWgaicW7xrmHhIhIzwWEXj2}, car_type=Sedan, driver={role=driver, device_id=AA2D5BD1-1B3D-37B7-8A0F-7DCCA9D149C3, car={license_plate=license01, model=gtx180}, name=Saurab Singh 4479, phone_number=9773869266, id=MWg01dHr8SZbalLxyS7M9A09ZuM2, document_verified=null}, updated_at=2020-10-15T14:56:57Z, razorpay_order_id=order_FpDYQJcvZEmYrt, id=pjzw3UbYECxOZ3oOwFuL, status=COMPLETED}
+D/TAG: syzwxGiTkDuxLQoqKfFM => {amount=86.0, trip_id=4b22572f-86d8-4412-a5a5-a5692d6b3eb0, payment_status=null, dropoff={address=Bus Station Pilibhit Bypass Rd, Bareilly, latitude=28.3512145, longitude=79.43928249999999}, created_at=2020-10-19T11:21:20Z, pickup={address=Rajendra Nagar Bareilly, Uttar Pradesh, latitude=28.39048255, longitude=79.42921067}, otp=4725, rider={role=rider, device_id=null, car=null, name=ridernight, phone_number=8130583124, id=NIt7xyvSFjP4kgOq4uePW6ANO0Z2}, car_type=Sedan, driver={role=driver, device_id=23A50640-7469-396E-88BE-B7EADE38AAE1, car={license_plate=license01, model=gtx180}, lastKnownLocation=null, name=Shivam Bhas, phone_number=9639241605, id=8B8kBqcqEDS25R65J8xTncBFcA32, document_verified=null}, updated_at=2020-10-19T11:21:49Z, razorpay_order_id=order_Fqk1pKeJjfOiaY, id=syzwxGiTkDuxLQoqKfFM, status=COMPLETED}
+D/TAG: vUPvjPHuB2iuEkxxxYIa => {amount=null, trip_id=b4df663a-b747-4b7d-bc28-121c6c91d5df, payment_status=null, dropoff={address=Al Nahda Street Al Nahda 1, Sharjah, latitude=25.2978251, longitude=55.3740256}, created_at=2020-11-02T11:47:07Z, pickup={address=Sector 24 Gurugram, Haryana, latitude=28.49063914, longitude=77.09345488}, otp=0110, rider={role=rider, device_id=null, car=null, name=, phone_number=8437379790, id=OESctiEcxlO1ZROX4UXDtx6D8JI2}, car_type=Hatchback, driver={role=driver, device_id=84E43E12-CBAD-33DC-AA89-5637D06B1568, car={license_plate=license01, model=gtx180}, lastKnownLocation=null, name=Driver1145 6041, phone_number=9817998779, id=UDMsB5oMwtTGv6gnLGmXbLL8KAq1, document_verified=null}, updated_at=2020-11-02T11:52:36Z, razorpay_order_id=null, status=COMPLETED}
+D/ViewRootImpl@a0cc44b[MainActivity]: dispatchDetachedFromWindow
+-----------------------------------------------------------------------------
+aadhar_card_expiry_date
+"30-10-2030"
+aadhar_cardback
+"https://firebasestorage.googleapis.com/v0/b/flipxon-cabs.appspot.com/o/driver%2FcbG9kCRm3JTERey5eGYuvZGO7Ab2%2Faadhar_cardback?alt=media&token=41a78fb4-df6a-4410-9968-04f807dec248"
+aadhar_cardfront
+"https://firebasestorage.googleapis.com/v0/b/flipxon-cabs.appspot.com/o/driver%2FcbG9kCRm3JTERey5eGYuvZGO7Ab2%2Faadhar_cardfront?alt=media&token=667a4dc8-2aed-4a20-86c2-91c8d0e8f2be"
+account_id
+"acc_GBKy9CY03M0Yxe"
+active
+true
+bankAccount
+"Suresh Bhardwaj, 007101015300, ICIC0006629"
+city
+"New Delhi"
+device_id
+"3D501C81-9DA2-3880-8294-6C05FB63DEAF"
+document_verified
+true
+driver_license_expiry_date
+"28-02-2021"
+driver_licenseback
+"https://firebasestorage.googleapis.com/v0/b/flipxon-cabs.appspot.com/o/driver%2FcbG9kCRm3JTERey5eGYuvZGO7Ab2%2Fdriver_licenseback?alt=media&token=c8d21db7-e599-4f8a-a991-3e1d8a9f6e12"
+driver_licensefront
+"https://firebasestorage.googleapis.com/v0/b/flipxon-cabs.appspot.com/o/driver%2FcbG9kCRm3JTERey5eGYuvZGO7Ab2%2Fdriver_licensefront?alt=media&token=5d99845a-60fe-4086-8565-20ac74c3b0f7"
+email
+"sb1967ind@gmail.com"
+lastKnownLocation
+latitude
+28.6096306
+longitude
+77.1067535
+mobile_number
+"9582930400"
+pan_card
+"https://firebasestorage.googleapis.com/v0/b/flipxon-cabs.appspot.com/o/driver%2FcbG9kCRm3JTERey5eGYuvZGO7Ab2%2Fpan_card?alt=media&token=9bcae138-39b4-49f3-b0dc-5199c1b5af6b"
+pan_card_expiry_date
+"30-10-2030"
+police_verification
+"https://firebasestorage.googleapis.com/v0/b/flipxon-cabs.appspot.com/o/driver%2FcbG9kCRm3JTERey5eGYuvZGO7Ab2%2Fpolice_verification?alt=media&token=a197415a-e492-44fc-917e-5909e3c47275"
+police_verification_expiry_date
+"30-10-2030"
+profile_picture
+"https://firebasestorage.googleapis.com/v0/b/flipxon-cabs.appspot.com/o/driver%2FcbG9kCRm3JTERey5eGYuvZGO7Ab2%2Fprofile_picture?alt=media&token=e5d6e803-1ee5-4a17-919f-bc9ff31a441a"
+profile_picture_expiry_date
+"30-10-2030"
+registration_date
+"2020-12-10"
+user_name
+"Suresh 1046"
+ 
+Cloud Firestore location: asia-southeast2
+
+--------------------------------------------------
+
+flipxon-cabs
+coolection-----driver
+fields-----
+aadhar_card_expiry_date:
+aadhar_cardback:
+aadhar_cardfront:
+account_id
+bankAccount:
+city:
+device_id:
+document_verified:
+driver_license_expiry_date:
+driver_licenseback:
+driver_licensefront:
+email:
+lastKnownLocation------
+latitude:
+longitude:
+mobile_number:
+pan_card:
+pan_card_expiry_date:
+police_verification:
+police_verification_expiry_date:
+profile_picture:
+profile_picture_expiry_date:
+rigistration_date:
+user_name:
+
+coolection-----allVehicle
+document-----vehicle
+field------
+fuel_type:
+make:
+model:
+registration_date:
+registration_number:
+registration_upto:
+vehicle_color:9996233722
+
+coolection-----vehicle
+document-----documents
+field------
+pollution_certificate:
+pollution_certificate_expiry_date:
+registration_certificate_expiry_date:
+registration_certificateback:
+registration_certificatefront:
+vehicle_insurance:
+vehicle_insurance_expiry_date:
+vehicle_permit:
+vehicle_permit_expiry_date:
